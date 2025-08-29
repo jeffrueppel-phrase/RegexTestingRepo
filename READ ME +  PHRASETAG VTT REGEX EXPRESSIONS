@@ -1,0 +1,38 @@
+READ ME + REGEX
+
+Following file contains steps to process .vtt files for timestamp tag protection and to aid translators in working on one single line to make the work easier.
+
+2 Steps
+
+
+Step 1. Run some search and replace on the file in question:
+
+Use VX Code or something similar (advise VX Code since regex handling can very just a little)
+
+(Beware, there's a trailing white space in the replace statements, make sure to include it each time)
+
+Find
+(^|\n)(\d{2}:\d{2}:\d{2}[.,]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[.,]\d{3}[^\r\n]*)(\r?\n)(?=\S)
+Replace
+$1$2 
+
+Find
+(\S)\r?\n(?=(?!\d{2}:\d{2}:\d{2})\S)
+Replace
+$1 
+
+Find
+([^.?!])\r?\n\r?\n(?=\d{2}:\d{2}:\d{2}[.,]\d{3})
+Replace
+$1 
+
+
+Step two.
+
+PHRASE TAG MATCHING
+1. Import the file as a new job with Phrase TMS
+2. Import as .txt
+3. Under .txt options add the statement below to the "Convert to Phrase TMS tags" option window"
+
+
+\d{2}:\d{2}:\d{2}[.,]\d{3}\s*-->\s*\d{2}:\d{2}:\d{2}[.,]\d{3}\s+align:middle line:\d{1,3}%
